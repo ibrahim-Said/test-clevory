@@ -22,8 +22,8 @@ class ProductTest extends TestCase
             'name'=>$this->faker->userName,
             'password'=>\Hash::make("secret123")
         ]);
-        $token=auth()->attempt(['email'=>$user->email,'password'=>$user->password]);
-        $response=$this->withHeader('authorization',`bearer {$token}`)->getJson('/api/products');
+        $token=auth()->attempt(['email'=>$user->email,'password'=>'secret123']);
+        $response=$this->withHeader('authorization',"bearer ".$token)->getJson('/api/products');
 
         $response->assertStatus(200);
     }
